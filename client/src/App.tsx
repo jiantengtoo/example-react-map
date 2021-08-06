@@ -3,6 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const [sss, setSss] = React.useState<any>('test');
+
+  React.useEffect(
+    () => {
+      fetch('http://localhost:5000/users')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setSss(data.lol)
+      });
+    },
+    []
+  )
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,8 +31,9 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn Reacts
         </a>
+        <div>{ sss }</div>
       </header>
     </div>
   );
