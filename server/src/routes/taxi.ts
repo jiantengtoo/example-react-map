@@ -1,6 +1,7 @@
 import axios from "axios";
 import express from "express";
 import { query, validationResult } from "express-validator";
+import instance from "../axios/instance";
 
 export const router = express.Router();
 
@@ -14,10 +15,12 @@ router.get(
 
     const err = validationResult(req);
 
+    const axiosInstance = instance;
+
     if (!err.isEmpty()) {
       res.status(400).json({ errors: err.array() });
     } else {
-      axios
+      axiosInstance
       .get(
         `https://qa-interview-test.splytech.dev/api/drivers`,
         {
