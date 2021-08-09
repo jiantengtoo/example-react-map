@@ -1,5 +1,5 @@
 import axios from "axios";
-import { endpointsToValidator, validateJSON } from "./runtimeValidators";
+import { ENDPOINT_VALIDATOR, validateJSON } from "./runtimeValidators";
 import _ from 'lodash';
 
 const instance = axios.create()
@@ -9,7 +9,7 @@ instance.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
 
-    const result = endpointsToValidator.filter((item) => {
+    const result = ENDPOINT_VALIDATOR.filter((item) => {
       return (item.method === response.config.method && item.url === response.config.url);
     })
 

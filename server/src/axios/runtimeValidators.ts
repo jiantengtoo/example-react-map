@@ -26,7 +26,7 @@ const TaxiResponseJSON = t.type({
   )
 })
 
-export const endpointsToValidator = [
+export const ENDPOINT_VALIDATOR = [
   {
     url: 'https://qa-interview-test.splytech.dev/api/drivers',
     method: 'get',
