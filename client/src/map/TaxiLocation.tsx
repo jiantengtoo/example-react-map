@@ -19,7 +19,7 @@ const TaxiLocation: FunctionComponent<TaxiLocationProps> = (
   useMapEvents({
     moveend(e) {
       fetchTaxisJSON();
-    }
+    },
   });
 
   const [listOfTaxis, setListOfTaxis] = useState<TaxisJSON>();
@@ -48,6 +48,7 @@ const TaxiLocation: FunctionComponent<TaxiLocationProps> = (
 
   useEffect(
     () => {
+      fetchTaxisJSON();
       const intervalFetch = setInterval(() => {
         fetchTaxisJSON();
       }, 10000);

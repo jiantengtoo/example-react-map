@@ -45,7 +45,7 @@ const OfficeLocation = () => {
   useEffect(
     () => {
       if (position) {
-        map.panTo(position);
+        map.setView(position, 14);
       }
     }, 
     [map, position]
