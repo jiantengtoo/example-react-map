@@ -4,6 +4,7 @@ import markerIconPng from "../icon/car.png"
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { TaxisJSON } from "../type/FetchTaxisJSON";
 import _ from "lodash";
+import axios from "axios";
 
 type TaxiLocationProps = {
   readonly numberOfTaxisToShow: number;
@@ -26,21 +27,23 @@ const TaxiLocation: FunctionComponent<TaxiLocationProps> = (
   const fetchTaxisJSON = useCallback(async () => {
     const center = map.getCenter();
 
-    const response = await fetch(
-      'http://localhost:5000/users?'
-      +
-      new URLSearchParams(
-        { 
-          latitude: center.lat.toString(), 
-          longitude: center.lng.toString(),
-          count: '20',
+    try {
+      const response = await axios.get(
+        'http://localhost:5000/taxi-locations',
+        {
+          params: {
+            latitude: center.lat.toString(), 
+            longitude: center.lng.toString(),
+            count: '20',
+          }
         }
       )
-    );
+  
+      setListOfTaxis(response.data);
+    } catch(err) {
+      console.error(err);
+    }
 
-    const taxis = await response.json();
-
-    setListOfTaxis(taxis);
   }, [map])
 
   useEffect(
