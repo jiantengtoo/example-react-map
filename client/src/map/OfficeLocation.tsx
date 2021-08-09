@@ -1,30 +1,38 @@
-import { Icon, LatLngExpression, LatLngTuple } from "leaflet";
+import { Icon, LatLngTuple } from "leaflet";
 import { Marker, useMap, useMapEvents } from "react-leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { useEffect, useState } from "react";
+import { findNearestOffice } from "./Util";
 
-type OfficeLocationsType = keyof typeof OfficeLocations;
+export type OfficeLocationsType = keyof typeof OFFICE_LOCATIONS;
 
-const OfficeLocations = Object.freeze({
+export const OFFICE_LOCATIONS = Object.freeze({
   SG: { 
     location: [1.285194, 103.8522982] as LatLngTuple
   },
   LDN: {
     location: [51.5049375, -0.0964509] as LatLngTuple
-  }
+  },
 });
 
 const OfficeLocation = () => {
 
-  const [position, setPosition] = useState<LatLngExpression>(OfficeLocations.SG.location);
+  const [position, setPosition] = useState<LatLngTuple | undefined>(undefined);
+
+  const [officeMarker, setOfficeMarker] = useState<LatLngTuple | undefined>(undefined);
 
   const map = useMap();
 
   useMapEvents({
-    locationfound(e) {
+    locationfound:(e) => {
       // find nearest office then setPosition to nearest office given latlng
-      setPosition(e.latlng);
+      const nearestOffice = findNearestOffice(e.latlng, OFFICE_LOCATIONS);
+      setOfficeMarker(OFFICE_LOCATIONS[nearestOffice].location);
+      setPosition(OFFICE_LOCATIONS[nearestOffice].location);
     },
+    dragend: (e) => {
+      setPosition(undefined);
+    }
   });
 
   useEffect(
@@ -34,9 +42,18 @@ const OfficeLocation = () => {
     [map]
   );
 
+  useEffect(
+    () => {
+      if (position) {
+        map.panTo(position);
+      }
+    }, 
+    [map, position]
+  );
+
   const onClick = (loc: OfficeLocationsType) => {
-    setPosition(OfficeLocations[loc].location);
-    map.panTo(OfficeLocations[loc].location);
+    setOfficeMarker(OFFICE_LOCATIONS[loc].location);
+    setPosition(OFFICE_LOCATIONS[loc].location);
   }
 
   return (
@@ -44,7 +61,7 @@ const OfficeLocation = () => {
       <div className={'leaflet-top leaflet-right'}>
         <div className="leaflet-control leaflet-bar">
           {
-            Object.keys(OfficeLocations).map(
+            Object.keys(OFFICE_LOCATIONS).map(
               (key) => { 
                 return <button key={ key } onClick={ () => { onClick(key as OfficeLocationsType) } }>{ key }</button>;
               }
@@ -52,7 +69,11 @@ const OfficeLocation = () => {
           }
         </div>
       </div>
-      <Marker position={position} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})} />
+      {
+        officeMarker
+        &&
+        <Marker position={officeMarker} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})} />
+      }
     </>    
   );
 }

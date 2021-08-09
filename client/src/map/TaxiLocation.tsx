@@ -47,7 +47,7 @@ const TaxiLocation: FunctionComponent<TaxiLocationProps> = (
     () => {
       const intervalFetch = setInterval(() => {
         fetchTaxisJSON();
-      }, 5000);
+      }, 10000);
       return () => clearInterval(intervalFetch)
     },
     [fetchTaxisJSON]

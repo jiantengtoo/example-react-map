@@ -1,9 +1,12 @@
-export function distance(
+import { LatLng } from "leaflet"
+import { OfficeLocationsType, OFFICE_LOCATIONS } from "./OfficeLocation"
+
+const distance = (
   lat1: number, 
   lon1: number, 
   lat2: number, 
   lon2: number,
-) {
+) => {
   var radlat1 = Math.PI * lat1/180
   var radlat2 = Math.PI * lat2/180
   var theta = lon1-lon2
@@ -16,4 +19,37 @@ export function distance(
   dist = dist * 180/Math.PI
   dist = dist * 60 * 1.1515
   return dist
+}
+
+export const findNearestOffice = (
+  currentLocation: LatLng,
+  officeLocations: typeof OFFICE_LOCATIONS,
+) => {
+  let nearest:OfficeLocationsType = Object.keys(officeLocations)[0] as OfficeLocationsType;
+
+  let nearestDistance: number = distance(
+    currentLocation.lat, 
+    currentLocation.lng, 
+    officeLocations[nearest].location[0], 
+    officeLocations[nearest].location[1]
+  );
+
+  for (const [key, value] of Object.entries(officeLocations)) {
+    const tempDistance = distance(
+      currentLocation.lat, 
+      currentLocation.lng, 
+      value.location[0], 
+      value.location[1]
+    )
+    if (
+      tempDistance
+      <
+      nearestDistance
+    ) {
+      nearest = key as OfficeLocationsType;
+      nearestDistance = tempDistance;
+    }
+  }
+
+  return nearest;
 }
