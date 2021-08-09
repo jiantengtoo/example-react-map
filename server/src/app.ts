@@ -1,18 +1,10 @@
-// var createError = require('http-errors');
-// var express = require('express');
-// var path = require('path');
-// var cookieParser = require('cookie-parser');
-// var logger = require('morgan');
-
 import express from "express";
 import path from "path";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import createHttpError from "http-errors";
 import { router as indexRouter } from "./routes";
-import { router as usersRouter } from "./routes/users";
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+import { router as taxiRouter } from "./routes/taxi";
 
 var app = express();
 
@@ -27,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// CORS
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -34,7 +27,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/taxi-locations', taxiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
