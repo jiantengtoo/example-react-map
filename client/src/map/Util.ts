@@ -1,7 +1,8 @@
 import { LatLng } from "leaflet"
 import { OfficeLocationsType, OFFICE_LOCATIONS } from "./OfficeLocation"
 
-const distance = (
+// get distance between two latlng
+export const distance = (
   lat1: number, 
   lon1: number, 
   lat2: number, 
@@ -21,6 +22,7 @@ const distance = (
   return dist
 }
 
+// get nearest office key
 export const findNearestOffice = (
   currentLocation: LatLng,
   officeLocations: typeof OFFICE_LOCATIONS,
