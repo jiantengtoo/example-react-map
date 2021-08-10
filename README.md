@@ -1,6 +1,9 @@
-# example-react-map
+## Example Fullstack React Map
 
-TODO
-1) set up github
-2) set up frontend react, backend express
-3) dockerize
+To run the project
+
+ 1. Prerequisite - to have docker & docker-compose install
+ https://docs.docker.com/get-docker/
+ https://docs.docker.com/compose/install/
+ 2. git clone or download the project
+ 3. run *docker-compose up* in the root folder
