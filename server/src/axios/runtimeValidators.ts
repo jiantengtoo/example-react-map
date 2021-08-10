@@ -7,12 +7,10 @@ export const validateJSON = <T>(input:any, t:t.Type<T>):boolean => {
     return true;
   }
 
-  console.error('fail JSON validator');
-
   return false;
 }
 
-const TaxiResponseJSON = t.type({
+export const TaxiResponseJSON = t.type({
   pickup_eta: t.number,
   drivers: t.array(
     t.type({
