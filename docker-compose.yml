@@ -34,7 +34,6 @@ services:
     environment:
       - CLIENT=http://localhost:3000
     command: npm run dev
-    # command: /usr/app/node_modules/.bin/nodemon -L src/app.js
 
 networks:
   mern-network:

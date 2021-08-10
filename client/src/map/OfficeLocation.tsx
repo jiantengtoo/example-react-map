@@ -3,22 +3,14 @@ import { Marker, useMap, useMapEvents } from "react-leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import { useEffect, useState } from "react";
 import { findNearestOffice } from "./Util";
-
-export type OfficeLocationsType = keyof typeof OFFICE_LOCATIONS;
-
-export const OFFICE_LOCATIONS = Object.freeze({
-  SG: { 
-    location: [1.285194, 103.8522982] as LatLngTuple
-  },
-  LDN: {
-    location: [51.5049375, -0.0964509] as LatLngTuple
-  },
-});
+import { OfficeLocationsType, OFFICE_LOCATIONS } from "../defaults/OfficeLocations";
 
 const OfficeLocation = () => {
 
+  // state for map to pan to
   const [position, setPosition] = useState<LatLngTuple | undefined>(undefined);
 
+  // state to set position of marker
   const [officeMarker, setOfficeMarker] = useState<LatLngTuple | undefined>(undefined);
 
   const map = useMap();
@@ -35,6 +27,7 @@ const OfficeLocation = () => {
     }
   });
 
+  // locate user location
   useEffect(
     () => {
       map.locate();

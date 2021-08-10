@@ -1,5 +1,5 @@
 import { LatLng } from "leaflet"
-import { OfficeLocationsType, OFFICE_LOCATIONS } from "./OfficeLocation"
+import { OfficeLocationsType, OFFICE_LOCATIONS } from "../defaults/OfficeLocations"
 
 // get distance between two latlng
 export const distance = (

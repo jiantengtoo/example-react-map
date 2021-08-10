@@ -14,6 +14,8 @@ const TaxiLocation: FunctionComponent<TaxiLocationProps> = (
   { numberOfTaxisToShow }
 ) => {
 
+  const [listOfTaxis, setListOfTaxis] = useState<TaxisJSON>();
+
   const map = useMap();
 
   useMapEvents({
@@ -21,8 +23,6 @@ const TaxiLocation: FunctionComponent<TaxiLocationProps> = (
       fetchTaxisJSON();
     },
   });
-
-  const [listOfTaxis, setListOfTaxis] = useState<TaxisJSON>();
 
   const fetchTaxisJSON = useCallback(async () => {
     const center = map.getCenter();
