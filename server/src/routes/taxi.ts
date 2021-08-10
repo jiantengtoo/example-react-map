@@ -1,4 +1,3 @@
-import axios from "axios";
 import express from "express";
 import { query, validationResult } from "express-validator";
 import instance from "../axios/instance";
