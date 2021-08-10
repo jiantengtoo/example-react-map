@@ -7,3 +7,4 @@ To run the project
  https://docs.docker.com/compose/install/
  2. git clone or download the project
  3. run *docker-compose up* in the root folder
+ 4. navigate to *http://localhost:3000/* in the browser
